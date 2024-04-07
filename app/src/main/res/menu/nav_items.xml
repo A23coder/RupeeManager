@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/house"
+        android:title="Home" />
+    <item
+        android:id="@+id/transaction"
+        android:icon="@drawable/cash"
+        android:title="Transactions" />
+    <item
+        android:id="@+id/placeHolder"
+        android:title="" />
+    <item
+        android:id="@+id/analysis"
+        android:icon="@drawable/research"
+        android:title="Analysis" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/profle"
+        android:title="Profile" />
+</menu>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddData">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioGroup
+            android:id="@+id/rd_grp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/pink_out_line"
+            android:checkedButton="@+id/expense"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+
+            <RadioButton
+                android:id="@+id/expense"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/expense"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/income"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_widget_background2"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/income"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="text"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rd_grp" />
+
+        <ImageView
+            android:id="@+id/img_calender"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/cal"
+            android:tooltipText="Date/Calender"
+            app:layout_constraintEnd_toStartOf="@id/tv_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mode"
+            tools:ignore="NotSibling" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:text="@string/selected_date"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_calender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_calender" />
+
+        <ImageView
+            android:id="@+id/img_rs1"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/rupee2"
+            android:tooltipText="Amount"
+            app:layout_constraintEnd_toEndOf="@+id/img_calender"
+            app:layout_constraintStart_toStartOf="@+id/img_calender"
+            app:layout_constraintTop_toBottomOf="@+id/img_calender" />
+
+        <EditText
+            android:id="@+id/edt_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_edittext"
+            android:ems="10"
+            android:hint="@string/enter_your_amount"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/tv_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_date" />
+
+        <ImageView
+            android:id="@+id/img_category"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/category"
+            android:tooltipText="Categories"
+            app:layout_constraintEnd_toEndOf="@+id/img_rs1"
+            app:layout_constraintStart_toStartOf="@+id/img_rs1"
+            app:layout_constraintTop_toBottomOf="@+id/img_rs1" />
+
+        <Spinner
+            android:id="@+id/cat_spinner"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_edittext"
+            app:layout_constraintBottom_toBottomOf="@+id/img_category"
+            app:layout_constraintStart_toStartOf="@id/edt_amount"
+            app:layout_constraintTop_toBottomOf="@id/edt_amount" />
+
+
+        <ImageView
+            android:id="@+id/img_payment"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/img_pay"
+            android:tooltipText="Payment_Mode"
+            app:layout_constraintEnd_toEndOf="@+id/img_category"
+            app:layout_constraintStart_toStartOf="@+id/img_category"
+            app:layout_constraintTop_toBottomOf="@+id/img_category" />
+
+        <Spinner
+            android:id="@+id/payment_spinner"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_edittext"
+            app:layout_constraintBottom_toBottomOf="@+id/img_payment"
+            app:layout_constraintStart_toStartOf="@id/cat_spinner"
+            app:layout_constraintTop_toBottomOf="@id/cat_spinner" />
+
+        <ImageView
+            android:id="@+id/img_details"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/list"
+            android:tooltipText="Details"
+            app:layout_constraintEnd_toEndOf="@+id/img_payment"
+            app:layout_constraintStart_toStartOf="@+id/img_payment"
+            app:layout_constraintTop_toBottomOf="@+id/img_payment" />
+
+        <EditText
+            android:id="@+id/edt_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_edittext"
+            android:ems="10"
+            android:hint="@string/enter_details"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_details"
+            app:layout_constraintEnd_toEndOf="@+id/edt_amount"
+            app:layout_constraintStart_toStartOf="@+id/edt_amount"
+            app:layout_constraintTop_toBottomOf="@id/payment_spinner" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_data_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="40dp"
+            android:contentDescription="@string/desc"
+            android:src="@drawable/disk1"
+            app:backgroundTint="@color/black"
+            app:fabCustomSize="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="30dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circular"
+            app:tint="@color/white" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,30 @@
+<resources>
+
+    <string name="default_client_id">198843671871-vqeqdv4fi4ncubrvk4kdqlvua7onufnl.apps.googleusercontent.com</string>
+    <string name="app_name">ExpenseTracker</string>
+    <string name="rupee_manager">Rupee Manager</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="floating_action_button">Floating Action Button</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="enter_details">Enter Details</string>
+    <string name="enter_your_amount">Enter Your Amount</string>
+    <string name="selected_date">Selected Date</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="goodMorning">Good Morning</string>
+    <string name="username">User Name</string>
+    <string name="thisMonth">This Month</string>
+    <string name="splash_screen_image">Splash Screen Image</string>
+    <string name="recent_Transaction">Recent Transaction</string>
+    <string name="desc">Description</string>
+    <string name="analysis">Analysis</string>
+    <string name="categories">Categories</string>
+    <string name="spending_s">Spending\'s</string>
+    <string name="username_">\@username</string>
+    <string name="transactions">Transactions</string>
+    <string name="add_data">Add Data</string>
+    <string name="no_transactions">No Transactions</string>
+    <string name="_0_0">₹ 0.0</string>
+    <string name="aboutApp">Effortlessly manage your finances with our intuitive Expense Manager app 📊💰. Stay in control of your spending, track your expenses with ease, and achieve your financial goals seamlessly. From budget planning to expense categorization, our app offers comprehensive features to streamline your money management process. Take charge of your finances and enjoy peace of mind knowing your expenses are organized and under control. Simplify your financial journey today with Expense Manager – your ultimate companion for smart money management.</string>
+</resources>
