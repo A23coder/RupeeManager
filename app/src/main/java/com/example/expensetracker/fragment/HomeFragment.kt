@@ -6,18 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.expensetracker.BottomnavListener
-import com.example.expensetracker.MainActivity
 import com.example.expensetracker.R
 import com.example.expensetracker.adapters.DataT1Adapter
 import com.example.expensetracker.database.Datatabase
 import com.example.expensetracker.database.TransactionData
 import com.example.expensetracker.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class HomeFragment : Fragment() {
         if (context is BottomnavListener) {
             bottomnavListener = context
         } else {
-            throw RuntimeException("Context must implement BottomnavListener")
+            throw RuntimeException("Context must implement BottomNavListener")
         }
     }
 
@@ -45,7 +46,6 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater , container , false)
         appDb = Datatabase.getDatabase(requireContext().applicationContext)
         firebaseAuth = FirebaseAuth.getInstance()
-
         val currentUser = firebaseAuth.currentUser
         if (currentUser != null) {
             binding.tvUsername.text = currentUser.displayName ?: "User Name"
@@ -79,12 +79,26 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //    private fun navigateToTransactionFragment() {
+//        bottomnavListener?.changeBottomNavListener(R.id.transaction)
+////        (activity as MainActivity).supportFragmentManager.beginTransaction()
+////            .replace(R.id.frameLayout , TransactionFragment())
+////            .addToBackStack(this@HomeFragment.toString()).commit()
+//
+//        val fragmentManager = (activity as MainActivity).supportFragmentManager
+//        val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentTransaction.add(R.id.frameLayout , HomeFragment())
+//        fragmentTransaction.commit()
+//
+//
+//    }
     private fun navigateToTransactionFragment() {
         bottomnavListener?.changeBottomNavListener(R.id.transaction)
-        (activity as MainActivity).supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout , TransactionFragment())
-            .addToBackStack(this@HomeFragment.toString()).commit()
+        val transactionFragment = TransactionFragment()
+        parentFragmentManager.beginTransaction().replace(R.id.frameLayout , transactionFragment)
+            .addToBackStack(null).commit()
     }
+
 
     @SuppressLint("SetTextI18n")
     private suspend fun getAmount() {
@@ -114,10 +128,45 @@ class HomeFragment : Fragment() {
         val transaction: List<TransactionData> = withContext(Dispatchers.IO) {
             transactionDao.getCombinedTransactions()
         }
+        val currentUser = firebaseAuth.currentUser
+
+
         val filteredTransactions = if (transaction.size < 10) {
             transaction.sortedBy { it.date }
         } else {
             transaction.sortedBy { it.date }.take(10)
+        }
+        if (isAdded) {
+            val message = if (filteredTransactions.isEmpty()) {
+                "No transactions found"
+            } else {
+                "Transactions loaded successfully"
+            }
+            println("PRINT $message")
+//            Toast.makeText(requireContext() , message , Toast.LENGTH_SHORT).show()
+        }
+        val firebaseTransactions = filteredTransactions.map { transaction ->
+            mapOf(
+                "amount" to transaction.amount ,
+                "type" to transaction.sourceOrExpenseType ,
+                "detail" to transaction.details ,
+                "date" to transaction.date ,
+                "mode" to transaction.t_mode ,
+            )
+        }
+
+        val databaseReference = FirebaseDatabase.getInstance().reference
+        val userTransactionsReference =
+            databaseReference.child("users").child(currentUser?.uid ?: "unknown")
+                .child("transactions")
+        userTransactionsReference.setValue(firebaseTransactions).addOnSuccessListener {
+            activity?.runOnUiThread {
+                Toast.makeText(activity , "Success" , Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener { exception ->
+            activity?.runOnUiThread {
+                Toast.makeText(activity , "No!!" , Toast.LENGTH_SHORT).show()
+            }
         }
         recyclerView.adapter = DataT1Adapter(filteredTransactions)
         toggleEmptyView(filteredTransactions.isEmpty())

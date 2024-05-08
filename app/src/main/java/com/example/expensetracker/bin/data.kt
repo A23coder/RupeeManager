@@ -72,7 +72,6 @@ class data {
 //}
 
 
-
     //        val indao = appDb.incomeDao()
 //        val income: List<IncomeData> = withContext(Dispatchers.IO) {
 //            indao.getIncomeData()
@@ -86,4 +85,5 @@ class data {
 //            exdao.getExpenseData()
 //        }
 //        recyclerView.adapter = DataTAdapter(income.sortedByDescending { it.date })
+
 }

@@ -13,6 +13,7 @@ import com.example.expensetracker.database.Datatabase
 import com.example.expensetracker.database.ExpenseData
 import com.example.expensetracker.database.IncomeData
 import com.example.expensetracker.databinding.ActivityAddDataBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +28,7 @@ class AddData : AppCompatActivity() {
     private lateinit var binding: ActivityAddDataBinding
     private lateinit var database: Datatabase
     private var radioButtonText: Any? = null
+    private lateinit var db: FirebaseFirestore
 
     @SuppressLint("SetTextI18n" , "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,7 @@ class AddData : AppCompatActivity() {
         getCalender()
 
         database = Datatabase.getDatabase(applicationContext)
+        db = FirebaseFirestore.getInstance()
 
         val catAdapter = ArrayAdapter(
             this@AddData ,
@@ -122,10 +125,24 @@ class AddData : AppCompatActivity() {
                             payment_mode
                         )
                         database.expenseDao().insertExpensedata(expenseData)
-
+                        Log.d("ExData" , "${expenseData.details.toString()} ${expenseData.amount}")
                         Toast.makeText(
                             this@AddData , "Data SuccessFully Added" , Toast.LENGTH_SHORT
                         ).show()
+                        val dbExpenseData = db.collection("ExpenseData")
+//                        dbExpenseData.add(expenseData).addOnSuccessListener {
+//                            Toast.makeText(
+//                                this@AddData ,
+//                                "Your Data has been Saved on Cloud" ,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }.addOnFailureListener {
+//                            Toast.makeText(
+//                                this@AddData ,
+//                                "Your Data has not been Saved on Cloud due to network issue" ,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
                     }
@@ -138,6 +155,7 @@ class AddData : AppCompatActivity() {
             }
         }
     }
+
 
     @SuppressLint("SimpleDateFormat" , "SetTextI18n")
     private fun getCalender() {
@@ -180,6 +198,21 @@ class AddData : AppCompatActivity() {
                         ).show()
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
+//                        val dbIncomeData = db.collection("IncomeData")
+//
+//                        dbIncomeData.add(incomeData).addOnSuccessListener {
+//                            Toast.makeText(
+//                                this@AddData ,
+//                                "Your Data has been Saved on Cloud" ,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }.addOnFailureListener {
+//                            Toast.makeText(
+//                                this@AddData ,
+//                                "Your Data has not been Saved on Cloud due to network issue" ,
+//                                Toast.LENGTH_SHORT
+//                            ).show()
+//                        }
                     }
                 } else {
                     Toast.makeText(

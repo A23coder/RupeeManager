@@ -61,6 +61,7 @@ class ProfileFragment : Fragment() {
             binding.tvUsername.text = currentUser.displayName.toString()
             binding.tvEmail.text = currentUser.email.toString()
             Glide.with(this).load(currentUser.photoUrl).into(binding.imgPr)
+            println("=====USer ${currentUser.uid} ${currentUser.email}")
         }
 
         binding.imgLogout?.setOnClickListener {
@@ -75,7 +76,6 @@ class ProfileFragment : Fragment() {
 
         binding.fabCloudUpload.setOnClickListener {
             googleSignIn()
-
         }
         return binding.root
     }
@@ -157,10 +157,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.imgDeveloper.setOnClickListener {
-            (activity as MainActivity).supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout , DevFragment())
-                .addToBackStack(this@ProfileFragment.toString()).commit()
-            return@setOnClickListener
+            Toast.makeText(context , "Updating very soon...." , Toast.LENGTH_SHORT).show()
         }
 
         binding.imgAddData.setOnClickListener {
