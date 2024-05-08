@@ -77,6 +77,7 @@ class HomeFragment : Fragment() {
         binding.imgSearch.setOnClickListener {
             navigateToTransactionFragment()
         }
+
     }
 
     //    private fun navigateToTransactionFragment() {
