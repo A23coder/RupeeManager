@@ -5,12 +5,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.example.expensetracker.databinding.SplashBinding
 
 class Splash : AppCompatActivity() {
+    private lateinit var binding: SplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.splash)
+        binding = SplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val animationSlideDown = AnimationUtils.loadAnimation(this , R.anim.slide_down)
+        animationSlideDown.fillAfter = true
+        binding.tvSplash.startAnimation(animationSlideDown)
+        binding.imgSplash.startAnimation(animationSlideDown)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN ,
             WindowManager.LayoutParams.FLAG_FULLSCREEN

@@ -150,9 +150,9 @@ class AddData : AppCompatActivity() , BottomnavListener {
 //                        }
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
-                        val fragment = HomeFragment()
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frameLayout , fragment).commit()
+//                        val fragment = HomeFragment()
+//                        supportFragmentManager.beginTransaction()
+//                            .replace(R.id.frameLayout , fragment).commit()
                     }
                 } else {
                     Toast.makeText(
@@ -206,9 +206,9 @@ class AddData : AppCompatActivity() , BottomnavListener {
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
 
-                        val fragment = HomeFragment()
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.frameLayout , fragment).commit()
+//                        val fragment = HomeFragment()
+//                        supportFragmentManager.beginTransaction()
+//                            .replace(R.id.frameLayout , fragment).commit()
 //                        val dbIncomeData = db.collection("IncomeData")
 //                        dbIncomeData.add(incomeData).addOnSuccessListener {
 //                            Toast.makeText(
