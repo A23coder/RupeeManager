@@ -1,6 +1,7 @@
 package com.example.expensetracker.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetracker.R
+import com.example.expensetracker.bin.data
 import com.example.expensetracker.database.TransactionData
 import java.util.Locale
 
 class DataT1Adapter(
-    private var dataTransaction: List<TransactionData>
+    private var dataTransaction: List<TransactionData> ,
 ) : RecyclerView.Adapter<DataT1Adapter.MyViewViewHolder>() {
 
     class MyViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,6 +50,7 @@ class DataT1Adapter(
         holder.t_transactionDate.text = item.date.toString()
         holder.t_income_source.text = item.sourceOrExpenseType.toString()
         holder.tv_catMode.text = item.t_mode.toString()
+
         checkCondditions(holder , item)
     }
 
@@ -154,5 +157,11 @@ class DataT1Adapter(
                 }
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newTransactionList: List<TransactionData>) {
+        dataTransaction = newTransactionList
+        notifyDataSetChanged()
     }
 }

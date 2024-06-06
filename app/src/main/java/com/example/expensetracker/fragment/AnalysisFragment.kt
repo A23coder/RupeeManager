@@ -46,7 +46,7 @@ class AnalysisFragment : Fragment() {
 
     @SuppressLint("CommitTransaction")
     override fun onCreateView(
-        inflater: LayoutInflater , container: ViewGroup? , savedInstanceState: Bundle?
+        inflater: LayoutInflater , container: ViewGroup? , savedInstanceState: Bundle? ,
     ): View {
         binding = FragmentAnalysisBinding.inflate(inflater , container , false)
         appDb = Datatabase.getDatabase(requireContext().applicationContext)
@@ -62,17 +62,22 @@ class AnalysisFragment : Fragment() {
                 .replace(R.id.frameLayout , TransactionFragment())
                 .addToBackStack(this@AnalysisFragment.toString()).commit()
         }
+        appDb = Datatabase.getDatabase(requireContext().applicationContext)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
+        super.onViewCreated(view , savedInstanceState)
         CoroutineScope(Dispatchers.Main).launch {
             showExpensePie()
             showIncomePie()
             showAmount()
         }
-        return binding.root
     }
 
     @SuppressLint("SetTextI18n")
     private suspend fun showAmount() {
-        appDb = Datatabase.getDatabase(requireContext().applicationContext)
+
         val amountIncomeDao = appDb.incomeDao()
         val amountIncome: List<Int> = withContext(Dispatchers.IO) {
             amountIncomeDao.getIncomeTotalAmountData()
@@ -97,21 +102,21 @@ class AnalysisFragment : Fragment() {
         }
 
         val entries: ArrayList<PieEntry> = ArrayList()
-        transaction.forEachIndexed { index, incomeData ->
+        transaction.forEachIndexed { index , incomeData ->
             if (incomeData.amount != null && incomeData.income_source != null) {
-                entries.add(PieEntry(incomeData.amount.toFloat(), incomeData.income_source))
+                entries.add(PieEntry(incomeData.amount.toFloat() , incomeData.income_source))
             }
         }
 
         if (entries.isNotEmpty()) {
-            val pieDataSet = PieDataSet(entries, "Incomes")
+            val pieDataSet = PieDataSet(entries , "Incomes")
             val customColors = arrayListOf(
-                Color.rgb(255, 204, 102),  // Orange
-                Color.rgb(255, 102, 102),  // Red
-                Color.rgb(102, 255, 102),  // Green
-                Color.rgb(102, 178, 255),  // Blue
-                Color.rgb(178, 102, 255),  // Purple
-                Color.rgb(255, 102, 255)   // Pink
+                Color.rgb(255 , 204 , 102) ,  // Orange
+                Color.rgb(255 , 102 , 102) ,  // Red
+                Color.rgb(102 , 255 , 102) ,  // Green
+                Color.rgb(102 , 178 , 255) ,  // Blue
+                Color.rgb(178 , 102 , 255) ,  // Purple
+                Color.rgb(255 , 102 , 255)   // Pink
             )
             pieDataSet.colors = customColors
             pieDataSet.valueTextColor = Color.BLACK
@@ -141,21 +146,21 @@ class AnalysisFragment : Fragment() {
         }
 
         val entries: ArrayList<PieEntry> = ArrayList()
-        transaction.forEachIndexed { index, expenseData ->
+        transaction.forEachIndexed { index , expenseData ->
             if (expenseData.amount != null && expenseData.type_epxpense != null) {
-                entries.add(PieEntry(expenseData.amount.toFloat(), expenseData.type_epxpense))
+                entries.add(PieEntry(expenseData.amount.toFloat() , expenseData.type_epxpense))
             }
         }
 
         if (entries.isNotEmpty()) {
-            val pieDataSet = PieDataSet(entries, "Spending")
+            val pieDataSet = PieDataSet(entries , "Spending")
             val customColors = arrayListOf(
-                Color.rgb(255, 204, 102),  // Orange
-                Color.rgb(255, 102, 102),  // Red
-                Color.rgb(102, 255, 102),  // Green
-                Color.rgb(102, 178, 255),  // Blue
-                Color.rgb(178, 102, 255),  // Purple
-                Color.rgb(255, 102, 255)   // Pink
+                Color.rgb(255 , 204 , 102) ,  // Orange
+                Color.rgb(255 , 102 , 102) ,  // Red
+                Color.rgb(102 , 255 , 102) ,  // Green
+                Color.rgb(102 , 178 , 255) ,  // Blue
+                Color.rgb(178 , 102 , 255) ,  // Purple
+                Color.rgb(255 , 102 , 255)   // Pink
             )
             pieDataSet.colors = customColors
             pieDataSet.valueTextColor = Color.BLACK

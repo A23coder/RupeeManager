@@ -30,7 +30,6 @@ class HomeFragment : Fragment() {
     private lateinit var appDb: Datatabase
     private lateinit var firebaseAuth: FirebaseAuth
     private var bottomnavListener: BottomnavListener? = null
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is BottomnavListener) {
@@ -41,7 +40,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater , container: ViewGroup? , savedInstanceState: Bundle?
+        inflater: LayoutInflater , container: ViewGroup? , savedInstanceState: Bundle? ,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater , container , false)
         appDb = Datatabase.getDatabase(requireContext().applicationContext)
@@ -56,7 +55,6 @@ class HomeFragment : Fragment() {
             binding.tvUsername.text = "User Name"
             binding.imgUser.setImageResource(R.drawable.user)
         }
-
         setupClickListeners()
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
@@ -129,6 +127,7 @@ class HomeFragment : Fragment() {
         val transaction: List<TransactionData> = withContext(Dispatchers.IO) {
             transactionDao.getCombinedTransactions()
         }
+
         val currentUser = firebaseAuth.currentUser
 
 
@@ -144,7 +143,7 @@ class HomeFragment : Fragment() {
                 "Transactions loaded successfully"
             }
             println("PRINT $message")
-//            Toast.makeText(requireContext() , message , Toast.LENGTH_SHORT).show()
+
         }
         val firebaseTransactions = filteredTransactions.map { transaction ->
             mapOf(
@@ -166,16 +165,21 @@ class HomeFragment : Fragment() {
             }
         }.addOnFailureListener { exception ->
             activity?.runOnUiThread {
-                Toast.makeText(activity , "No!!" , Toast.LENGTH_SHORT).show()
+                // TODO:
             }
         }
         recyclerView.adapter = DataT1Adapter(filteredTransactions)
         toggleEmptyView(filteredTransactions.isEmpty())
+
     }
 
     private fun toggleEmptyView(isEmpty: Boolean) {
         val emptyStateLayout = binding.emptyStateLayout
         recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         emptyStateLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
+    }
+    override fun onDetach() {
+        super.onDetach()
+        bottomnavListener = null
     }
 }

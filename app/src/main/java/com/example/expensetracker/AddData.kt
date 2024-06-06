@@ -9,10 +9,12 @@ import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.expensetracker.adapters.DataT1Adapter
 import com.example.expensetracker.database.Datatabase
 import com.example.expensetracker.database.ExpenseData
 import com.example.expensetracker.database.IncomeData
 import com.example.expensetracker.databinding.ActivityAddDataBinding
+import com.example.expensetracker.fragment.HomeFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -24,17 +26,20 @@ import java.util.Calendar
 import java.util.Date
 
 @Suppress("DEPRECATION")
-class AddData : AppCompatActivity() {
+class AddData : AppCompatActivity() , BottomnavListener {
     private lateinit var binding: ActivityAddDataBinding
     private lateinit var database: Datatabase
     private var radioButtonText: Any? = null
     private lateinit var db: FirebaseFirestore
+    private val adapter = DataT1Adapter(emptyList())
 
     @SuppressLint("SetTextI18n" , "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        println("HIIIIIII")
+
         binding.tvMode.text = "Expense"
         binding.tvMode.setTextColor(Color.RED)
         getCalender()
@@ -129,7 +134,7 @@ class AddData : AppCompatActivity() {
                         Toast.makeText(
                             this@AddData , "Data SuccessFully Added" , Toast.LENGTH_SHORT
                         ).show()
-                        val dbExpenseData = db.collection("ExpenseData")
+//                        val dbExpenseData = db.collection("ExpenseData")
 //                        dbExpenseData.add(expenseData).addOnSuccessListener {
 //                            Toast.makeText(
 //                                this@AddData ,
@@ -145,6 +150,9 @@ class AddData : AppCompatActivity() {
 //                        }
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
+                        val fragment = HomeFragment()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.frameLayout , fragment).commit()
                     }
                 } else {
                     Toast.makeText(
@@ -192,14 +200,16 @@ class AddData : AppCompatActivity() {
                             0 , date , mode , Integer.parseInt(amount) , income_source , details
                         )
                         database.incomeDao().insertIncomeData(incomeData)
-
                         Toast.makeText(
                             this@AddData , "Data SuccessFully Added" , Toast.LENGTH_SHORT
                         ).show()
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
+
+                        val fragment = HomeFragment()
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.frameLayout , fragment).commit()
 //                        val dbIncomeData = db.collection("IncomeData")
-//
 //                        dbIncomeData.add(incomeData).addOnSuccessListener {
 //                            Toast.makeText(
 //                                this@AddData ,
@@ -222,5 +232,25 @@ class AddData : AppCompatActivity() {
             } catch (_: Exception) {
             }
         }
+    }
+
+    override fun changeBottomNavListener(itemId: Int) {
+        Toast.makeText(this , "Navigation item clicked: $itemId" , Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Start" , "onResume")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("Start" , "onRestart")
+//        HomeFragment().refreshData(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("Start" , "On Start")
     }
 }
