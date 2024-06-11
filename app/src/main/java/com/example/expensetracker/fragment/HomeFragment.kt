@@ -127,7 +127,6 @@ class HomeFragment : Fragment() {
         val transaction: List<TransactionData> = withContext(Dispatchers.IO) {
             transactionDao.getCombinedTransactions()
         }
-
         val currentUser = firebaseAuth.currentUser
 
 
@@ -168,7 +167,8 @@ class HomeFragment : Fragment() {
                 // TODO:
             }
         }
-        recyclerView.adapter = DataT1Adapter(filteredTransactions)
+        recyclerView.adapter =
+            DataT1Adapter(filteredTransactions , context?.applicationContext)
         toggleEmptyView(filteredTransactions.isEmpty())
 
     }
@@ -178,6 +178,7 @@ class HomeFragment : Fragment() {
         recyclerView.visibility = if (isEmpty) View.GONE else View.VISIBLE
         emptyStateLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
     }
+
     override fun onDetach() {
         super.onDetach()
         bottomnavListener = null

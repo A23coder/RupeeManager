@@ -10,7 +10,6 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:contentDescription="@string/splash_screen_image"
-        android:rotation="9"
         android:src="@drawable/rupee"
         app:layout_constraintBottom_toTopOf="@+id/tv_splash"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,6 +2,7 @@ package com.example.expensetracker
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +15,6 @@ import com.example.expensetracker.database.Datatabase
 import com.example.expensetracker.database.ExpenseData
 import com.example.expensetracker.database.IncomeData
 import com.example.expensetracker.databinding.ActivityAddDataBinding
-import com.example.expensetracker.fragment.HomeFragment
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -150,6 +150,11 @@ class AddData : AppCompatActivity() , BottomnavListener {
 //                        }
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
+                        val intent = Intent(this@AddData , MainActivity::class.java).apply {
+                            putExtra("frag" , "2")
+                        }
+                        startActivity(intent)
+                        finish()
 //                        val fragment = HomeFragment()
 //                        supportFragmentManager.beginTransaction()
 //                            .replace(R.id.frameLayout , fragment).commit()
@@ -205,7 +210,11 @@ class AddData : AppCompatActivity() , BottomnavListener {
                         ).show()
                         binding.edtAmount.text.clear()
                         binding.edtDetails.text.clear()
-
+                        val intent = Intent(this@AddData , MainActivity::class.java).apply {
+                            putExtra("frag" , "2")
+                        }
+                        startActivity(intent)
+                        finish()
 //                        val fragment = HomeFragment()
 //                        supportFragmentManager.beginTransaction()
 //                            .replace(R.id.frameLayout , fragment).commit()

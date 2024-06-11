@@ -1,21 +1,22 @@
 package com.example.expensetracker.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.expensetracker.R
-import com.example.expensetracker.bin.data
 import com.example.expensetracker.database.TransactionData
 import java.util.Locale
 
 class DataT1Adapter(
     private var dataTransaction: List<TransactionData> ,
+    private var context: Context? = null ,
 ) : RecyclerView.Adapter<DataT1Adapter.MyViewViewHolder>() {
 
     class MyViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,11 +51,13 @@ class DataT1Adapter(
         holder.t_transactionDate.text = item.date.toString()
         holder.t_income_source.text = item.sourceOrExpenseType.toString()
         holder.tv_catMode.text = item.t_mode.toString()
-
-        checkCondditions(holder , item)
+        holder.itemView.setOnClickListener {
+            Toast.makeText(context , "${item.details.capitalize()}" , Toast.LENGTH_SHORT).show()
+        }
+        checkConditions(holder , item)
     }
 
-    private fun checkCondditions(holder: MyViewViewHolder , item: TransactionData) {
+    private fun checkConditions(holder: MyViewViewHolder , item: TransactionData) {
         if (item.t_mode == "Income") {
             holder.tv_catMode.setTextColor(
                 ContextCompat.getColor(

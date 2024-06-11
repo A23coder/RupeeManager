@@ -2,6 +2,7 @@ package com.example.expensetracker
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -21,6 +22,11 @@ class MainActivity : AppCompatActivity() , BottomnavListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.bottomNavigationView.itemIconTintList = null
+        val frag = intent.getStringExtra("frag")
+        Log.d("FRAGMENT IS " , frag.toString())
+        if (frag == "2") {
+            replaceFragment(TransactionFragment())
+        }
         replaceFragment(HomeFragment())
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
